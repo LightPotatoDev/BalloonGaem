@@ -1,25 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6e4lssvwwqxn"]
+[gd_scene load_steps=2 format=3 uid="uid://dpf0v0iacyr7d"]
 
-[ext_resource type="Script" path="res://scenes/objects/AirTank.gd" id="1_myrnq"]
-[ext_resource type="Texture2D" uid="uid://c11bt6xwhgil0" path="res://resources/sprites/placeholders/air_tamk.png" id="2_nrms0"]
+[ext_resource type="PackedScene" uid="uid://c6e4lssvwwqxn" path="res://scenes/objects/AirTank.tscn" id="1_l233x"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l88qx"]
-size = Vector2(4, 4)
+[node name="AirTankDown" type="Node2D"]
 
-[node name="AirTank" type="Node2D"]
-script = ExtResource("1_myrnq")
-dir = Vector2(0, 1)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AirTank" parent="." instance=ExtResource("1_l233x")]
 rotation = 1.5708
-texture = ExtResource("2_nrms0")
-
-[node name="Area2D" type="Area2D" parent="." groups=["air_tank"]]
-position = Vector2(0, 32)
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_l88qx")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+dir = Vector2(0, 1)

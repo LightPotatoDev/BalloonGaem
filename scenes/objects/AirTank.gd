@@ -1,10 +1,14 @@
 extends Node2D
 
 @export var dir:Vector2
+@onready var ray = $RayCast2D
+var balloon
 
-func _on_area_2d_body_entered(balloon):
-	print(balloon)
-	balloon.scalable_dir[dir] = true
-
-func _on_area_2d_body_exited(balloon):
-	balloon.scalable_dir[dir] = false
+func _process(delta):
+	if ray.is_colliding():
+		balloon = ray.get_collider()
+		balloon.scalable_dir[dir] = true
+	else:
+		if balloon != null:
+			balloon.scalable_dir[dir] = false
+			balloon = null
