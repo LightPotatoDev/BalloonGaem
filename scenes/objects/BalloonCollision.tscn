@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmghjdu7kggnd"]
+
+[ext_resource type="Script" path="res://scenes/objects/BalloonCollision.gd" id="1_vthij"]
+[ext_resource type="Texture2D" uid="uid://bvf1ldvu22o15" path="res://resources/sprites/placeholders/ballon.png" id="2_g4vou"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tw6dm"]
+
+[node name="BalloonCollision" type="CharacterBody2D" groups=["balloon"]]
+script = ExtResource("1_vthij")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_g4vou")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tw6dm")
