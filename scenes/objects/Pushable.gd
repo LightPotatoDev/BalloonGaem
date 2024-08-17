@@ -20,7 +20,7 @@ func _ready():
 	for child in get_children():
 		child_colliders[child.position] = child
 			
-func check_move_collision(dir:Vector2) -> bool:
+func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
 	var cols = []
 	for child in child_colliders.values():
 		cols.append(child.check_collision(dir))
@@ -36,8 +36,9 @@ func check_move_collision(dir:Vector2) -> bool:
 		var group = col.get_groups()[0]
 		if group == "wall":
 			movable = false
-		if group == "balloon" and col.get_parent() != self:
-			movable = col.get_parent().check_move_collision(dir)
+		exclude_list.append(self)
+		if group == "balloon" and col.get_parent() not in exclude_list:
+			movable = col.get_parent().check_move_collision(dir, exclude_list)
 			if movable:
 				things_to_move[col.get_parent()] = null
 
