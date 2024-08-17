@@ -18,6 +18,9 @@ func get_input():
 				
 		for pos in pos_to_add.keys():
 			add_balloon_child(pos)
+			
+		for col in child_colliders.values():
+			col.check_nearby_balloon()
 				
 func scale_balloon(dir:Vector2) -> PackedVector2Array:
 	var pos_to_add:PackedVector2Array = []
