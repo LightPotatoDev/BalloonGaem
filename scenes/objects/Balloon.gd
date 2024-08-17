@@ -1,41 +1,28 @@
 extends Pushable
 class_name Balloon
 
-@export var is_player:bool = false
 const BALLOON_COL = preload("res://scenes/objects/BalloonCollision.tscn")
 
-func get_input():
-	const INPUTS = {"ui_left":Vector2.LEFT, 
-					"ui_right":Vector2.RIGHT, 
-					"ui_up":Vector2.UP, 
-					"ui_down":Vector2.DOWN}
-	for key in INPUTS.keys():
-		if Input.is_action_just_pressed(key):
-			move(INPUTS[key], check_move_collision(INPUTS[key]))
-				
-func check_scale_collision(dir:Vector2):
-	var cols = []
-	for child in child_colliders:
-		cols.append(child.check_collision(dir))
-		
-	var movable:bool = true
-	for col in cols:
-		if movable == false:
-			things_to_move = {}
-			break
-		if col == null:
-			continue
-			
-		var group = col.get_groups()[0]
-		if group == "wall":
-			movable = false
-		if group == "balloon" and col.get_parent() != self:
-			movable = col.get_parent().check_move_collision(dir)
-			if movable:
-				things_to_move[col.get_parent()] = null
+func _ready():
+	super._ready()
 
-	return movable
-	
-func _physics_process(_delta):
-	if is_player:
-		get_input()
+func _physics_process(delta):
+	super._physics_process(delta)
+	if Input.is_action_just_pressed("ui_accept"):
+		scale_balloon(Vector2.DOWN)
+				
+func scale_balloon(dir:Vector2):
+	var pos_to_add = []
+	for child in child_colliders.values():
+		if child.check_collision(dir) == null and (child.position+dir*32) not in child_colliders:
+			pos_to_add.append(child.position + dir * 32)
+			
+	print(pos_to_add)
+	for pos in pos_to_add:
+		add_balloon_child(pos)
+
+func add_balloon_child(pos:Vector2):
+	var bal_col = BALLOON_COL.instantiate()
+	bal_col.position = pos
+	child_colliders[pos] = bal_col
+	add_child(bal_col)
