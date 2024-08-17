@@ -2,7 +2,8 @@ extends TileMap
 class_name Pushable
 
 var child_pos:PackedVector2Array = []
-var things_to_move = {}
+var things_to_move = {} #collider:null
+@onready var ray:RayCast2D = $RayCast2D
 
 @export var is_player:bool = false
 var tween:Tween
@@ -10,8 +11,8 @@ var tween:Tween
 var pos_history:PackedVector2Array = []
 	
 func _ready():
-	print(get_used_cells(1))
-	child_pos = get_used_cells(1)
+	print(get_used_cells(0))
+	child_pos = get_used_cells(0)
 	EventBus.undo.connect(_on_undo)
 	EventBus.move.connect(_on_move)
 		
@@ -39,21 +40,31 @@ func _physics_process(_delta):
 			
 func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
 	var movable:bool = true
-	for pos in child_pos:
-		if movable == false:
-			things_to_move = {} #used as set
-			break
-			
+	for col in get_all_colliders(dir):
 		var group = col.get_groups()[0]
+		exclude_list.append(self)
 		if group == "wall":
 			movable = false
-		exclude_list.append(self)
-		if group == "balloon" and col.get_parent() not in exclude_list:
-			movable = col.get_parent().check_move_collision(dir, exclude_list)
+		if group == "balloon" and col not in exclude_list:
+			movable = col.check_move_collision(dir, exclude_list)
 			if movable:
-				things_to_move[col.get_parent()] = null
+				things_to_move[col] = null
 
 	return movable
+
+func get_all_colliders(dir:Vector2):
+	var cols:Dictionary = {}
+	for pos in child_pos:
+		var col = check_spot_collision(pos,dir)
+		if col != null:
+			cols[col] = null
+	return cols.keys()
+	
+func check_spot_collision(pos:Vector2, dir:Vector2):
+	ray.position = pos*32 + Vector2.ONE * 16
+	ray.target_position = dir * 32
+	ray.force_raycast_update()
+	return ray.get_collider()
 	
 func move(dir:Vector2):
 	for thing in things_to_move:
