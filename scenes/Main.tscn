@@ -1,28 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://2lxmwbgsphcx"]
+[gd_scene load_steps=3 format=3 uid="uid://2lxmwbgsphcx"]
 
 [ext_resource type="Script" path="res://scenes/GameManager.gd" id="1_c0mq4"]
-[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/Balloon.tscn" id="1_i0xqu"]
-[ext_resource type="TileSet" uid="uid://cau1xylhqfcta" path="res://resources/terrain_tiles.tres" id="2_we40a"]
-[ext_resource type="TileSet" uid="uid://bknitdukt8bmp" path="res://resources/object_tilemap.tres" id="3_ln3ib"]
+[ext_resource type="PackedScene" uid="uid://oequqvjpuhvy" path="res://scenes/levels/Level1.tscn" id="2_v4e1o"]
 
 [node name="Main" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_c0mq4")
 
-[node name="PlayerBalloon" parent="GameManager" instance=ExtResource("1_i0xqu")]
-position = Vector2(144, 144)
-is_player = true
-
-[node name="PlayerBalloon2" parent="GameManager" instance=ExtResource("1_i0xqu")]
-position = Vector2(240, 176)
-
-[node name="Terrain" type="TileMap" parent="GameManager" groups=["wall"]]
-tile_set = ExtResource("2_we40a")
-format = 2
-layer_0/tile_data = PackedInt32Array(196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 393222, 0, 0, 327684, 0, 0, 393223, 0, 0)
-
-[node name="Objects" type="TileMap" parent="GameManager"]
-tile_set = ExtResource("3_ln3ib")
-format = 2
-layer_0/tile_data = PackedInt32Array(196614, 0, 65536, 131084, 0, 131072, 524301, 0, 196608, 524304, 0, 262144)
+[node name="Level1" parent="GameManager" instance=ExtResource("2_v4e1o")]

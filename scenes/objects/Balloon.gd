@@ -7,6 +7,8 @@ var child_col_hist = []
 
 func get_input():
 	super.get_input()
+	if Global.game_state != Global.STATES.DEFAULT:
+		return
 	if Input.is_action_just_pressed("ui_accept"):
 		var pos_to_add:Dictionary = {} #used as set
 		for dir in scalable_dir:
@@ -51,6 +53,3 @@ func _on_undo():
 		child_colliders[pos].queue_free()
 	child_colliders = prev_child.duplicate(true)
 	child_col_hist.remove_at(child_col_hist.size()-1)
-	
-	print(pos_history)
-	print(child_col_hist)

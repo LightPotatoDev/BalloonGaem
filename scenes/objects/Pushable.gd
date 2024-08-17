@@ -7,7 +7,6 @@ var things_to_move = {}
 @export var is_player:bool = false
 var tween:Tween
 
-var is_moving:bool = false
 var pos_history:PackedVector2Array = []
 	
 func _ready():
@@ -17,12 +16,14 @@ func _ready():
 	EventBus.move.connect(_on_move)
 		
 func get_input():
+	if Global.game_state != Global.STATES.DEFAULT:
+		return
 	const INPUTS = {"ui_left":Vector2.LEFT, 
 					"ui_right":Vector2.RIGHT, 
 					"ui_up":Vector2.UP, 
 					"ui_down":Vector2.DOWN}
 	for key in INPUTS.keys():
-		if is_player and Input.is_action_just_pressed(key) and not is_moving:
+		if is_player and Input.is_action_just_pressed(key):
 			if check_move_collision(INPUTS[key]):
 				instant_finish_tween()
 				EventBus.move.emit()
@@ -65,11 +66,11 @@ func move(dir:Vector2):
 		thing.move(dir)
 	things_to_move = {}
 	instant_finish_tween()
-	is_moving = true
+	Global.game_state = Global.STATES.MOVING
 	tween = create_tween()
 	tween.tween_property(self,"position",position+dir*32,0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await tween.finished
-	is_moving = false
+	Global.game_state = Global.STATES.DEFAULT
 
 func cant_move(dir:Vector2):
 	pass
@@ -82,7 +83,6 @@ func instant_finish_tween():
 	if tween != null and tween.is_running():
 		tween.pause()
 		tween.custom_step(1)
-		is_moving = false
 	
 func _on_undo():
 	if pos_history.size() == 0:
