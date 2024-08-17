@@ -5,8 +5,17 @@ var child_colliders = {}
 var things_to_move = {}
 
 @export var is_player:bool = false
-var is_moving:bool = false
+var tween:Tween
 
+var pos_history:PackedVector2Array = []
+var history_pointer:int = -1
+	
+func _ready():
+	for child in get_children():
+		child_colliders[child.position] = child
+	EventBus.undo.connect(_on_undo)
+	EventBus.move.connect(_on_move)
+		
 func get_input():
 	const INPUTS = {"ui_left":Vector2.LEFT, 
 					"ui_right":Vector2.RIGHT, 
@@ -14,11 +23,18 @@ func get_input():
 					"ui_down":Vector2.DOWN}
 	for key in INPUTS.keys():
 		if is_player and Input.is_action_just_pressed(key):
-			move(INPUTS[key], check_move_collision(INPUTS[key]))
-	
-func _ready():
-	for child in get_children():
-		child_colliders[child.position] = child
+			if check_move_collision(INPUTS[key]):
+				instant_finish_tween()
+				EventBus.move.emit()
+				move(INPUTS[key])
+			else:
+				cant_move(INPUTS[key])
+			
+	if Input.is_action_just_pressed("ui_copy"):
+		print(pos_history)
+		
+func _physics_process(_delta):
+	get_input()
 			
 func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
 	var cols = []
@@ -28,7 +44,7 @@ func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
 	var movable:bool = true
 	for col in cols:
 		if movable == false:
-			things_to_move = {}
+			things_to_move = {} #used as set
 			break
 		if col == null:
 			continue
@@ -44,20 +60,37 @@ func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
 
 	return movable
 	
-func move(dir:Vector2, can_move:bool):
+func move(dir:Vector2):
 	for thing in things_to_move:
-		thing.move(dir, can_move)
+		thing.move(dir)
 	things_to_move = {}
-	if can_move and not is_moving:
-		is_moving = true
-		var tween = create_tween()
-		tween.tween_property(self,"position",position+dir*32,0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		await tween.finished
-		is_moving = false
-		#position += dir * 32
-	else:
-		pass
-		#add 'not moving' animation
+	instant_finish_tween()
+	tween = create_tween()
+	tween.tween_property(self,"position",position+dir*32,0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func cant_move(dir:Vector2):
+	pass
+	#TODO - add 'not moving' animation
 		
-func _physics_process(_delta):
-	get_input()
+func _on_move():
+	add_history(position)
+	
+func add_history(pos:Vector2):
+	history_pointer += 1
+	pos_history.append(pos)
+	
+func instant_finish_tween():
+	if tween != null and tween.is_running():
+		tween.pause()
+		tween.custom_step(1)
+	
+func _on_undo():
+	if history_pointer == -1:
+		print('nothing to undo')
+		return
+		
+	position = pos_history[history_pointer]
+	pos_history.remove_at(pos_history.size()-1)
+	history_pointer -= 1
+		
+	
