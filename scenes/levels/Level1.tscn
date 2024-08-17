@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://oequqvjpuhvy"]
 
-[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/Balloon.tscn" id="1_wk7g6"]
+[ext_resource type="PackedScene" uid="uid://c72eakpv5xabw" path="res://scenes/objects/Balloon.tscn" id="1_wk7g6"]
 [ext_resource type="TileSet" uid="uid://cau1xylhqfcta" path="res://resources/terrain_tiles.tres" id="2_p0kpt"]
 [ext_resource type="TileSet" uid="uid://bknitdukt8bmp" path="res://resources/object_tilemap.tres" id="3_1g1vt"]
 [ext_resource type="PackedScene" uid="uid://dxm2n4pn5r4ql" path="res://scenes/objects/AirTankRight.tscn" id="4_sdll4"]
@@ -16,6 +16,7 @@ is_player = true
 
 [node name="PlayerBalloon2" parent="." instance=ExtResource("1_wk7g6")]
 position = Vector2(240, 176)
+is_player = null
 
 [node name="Terrain" type="TileMap" parent="." groups=["wall"]]
 tile_set = ExtResource("2_p0kpt")
