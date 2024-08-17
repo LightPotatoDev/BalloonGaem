@@ -31,7 +31,7 @@ func _on_no_tile(power):
 	else:
 		no_tiles -= 1
 		
-func _process(delta):
+func _process(_delta):
 	if yes_tiles_left == 0 and no_tiles == 0 and Global.game_state == Global.STATES.DEFAULT:
 		Global.game_state = Global.STATES.WIN
-		print('a')
+		print('win')
