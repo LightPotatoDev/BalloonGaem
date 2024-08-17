@@ -1,7 +1,7 @@
 extends Pushable
 class_name Balloon
 
-const BALLOON_COL = preload("res://scenes/objects/BalloonCollision.tscn")
+@onready var ray:RayCast2D = $RayCast2D
 var scalable_dir = {Vector2.UP:false, Vector2.RIGHT:false, Vector2.DOWN:false, Vector2.LEFT:false}
 var child_col_hist = []
 
@@ -28,7 +28,6 @@ func scale_balloon(dir:Vector2) -> PackedVector2Array:
 	return pos_to_add
 
 func add_balloon_child(pos:Vector2):
-	var bal_col = BALLOON_COL.instantiate()
 	bal_col.position = pos
 	child_colliders[pos] = bal_col
 	add_child(bal_col)

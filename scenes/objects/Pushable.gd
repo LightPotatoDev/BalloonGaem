@@ -1,7 +1,7 @@
-extends Node2D
+extends TileMap
 class_name Pushable
 
-var child_colliders:Dictionary = {} #Vector2 : Node
+var child_pos:PackedVector2Array = []
 var things_to_move = {}
 
 @export var is_player:bool = false
@@ -10,8 +10,8 @@ var tween:Tween
 var pos_history:PackedVector2Array = []
 	
 func _ready():
-	for child in get_children():
-		child_colliders[child.position] = child
+	print(get_used_cells(1))
+	child_pos = get_used_cells(1)
 	EventBus.undo.connect(_on_undo)
 	EventBus.move.connect(_on_move)
 		
@@ -38,17 +38,11 @@ func _physics_process(_delta):
 	get_input()
 			
 func check_move_collision(dir:Vector2, exclude_list = []) -> bool:
-	var cols = []
-	for child in child_colliders.values():
-		cols.append(child.check_collision(dir))
-		
 	var movable:bool = true
-	for col in cols:
+	for pos in child_pos:
 		if movable == false:
 			things_to_move = {} #used as set
 			break
-		if col == null:
-			continue
 			
 		var group = col.get_groups()[0]
 		if group == "wall":

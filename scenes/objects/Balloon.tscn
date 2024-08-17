@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://6js8brrwjbmt"]
+[gd_scene load_steps=3 format=3 uid="uid://c72eakpv5xabw"]
 
 [ext_resource type="Script" path="res://scenes/objects/Balloon.gd" id="1_igggx"]
-[ext_resource type="PackedScene" uid="uid://bmghjdu7kggnd" path="res://scenes/objects/BalloonCollision.tscn" id="2_40n74"]
+[ext_resource type="TileSet" uid="uid://5tnylrfe4mrd" path="res://resources/balloon_tiles.tres" id="1_rlrhe"]
 
-[node name="Balloon" type="Node2D"]
+[node name="Balloon" type="TileMap"]
+tile_set = ExtResource("1_rlrhe")
+format = 2
 script = ExtResource("1_igggx")
+is_player = null
 
-[node name="BalloonCollision" parent="." instance=ExtResource("2_40n74")]
-
-[node name="BalloonCollision2" parent="." instance=ExtResource("2_40n74")]
-position = Vector2(32, 0)
+[node name="RayCast2D" type="RayCast2D" parent="."]

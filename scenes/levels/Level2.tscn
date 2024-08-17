@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dve3pma8e23ah"]
 
-[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/Balloon.tscn" id="1_jwp1h"]
+[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/BalloonLegacy.tscn" id="1_jwp1h"]
 [ext_resource type="TileSet" uid="uid://cau1xylhqfcta" path="res://resources/terrain_tiles.tres" id="2_ii7ar"]
 [ext_resource type="TileSet" uid="uid://bknitdukt8bmp" path="res://resources/object_tilemap.tres" id="3_dqmtl"]
 [ext_resource type="PackedScene" uid="uid://dxm2n4pn5r4ql" path="res://scenes/objects/AirTankRight.tscn" id="4_2g7xl"]
