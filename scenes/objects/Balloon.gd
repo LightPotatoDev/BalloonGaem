@@ -28,7 +28,7 @@ func determine_scale_pos(dir:Vector2) -> PackedVector2Array:
 	return pos_to_add
 	
 func scale_balloon(pos:Vector2):
-	set_cell(0,pos,0,Vector2.ZERO)
+	set_cell(0,pos,2,Vector2.ZERO)
 	child_pos.append(pos)
 
 func _on_move():
