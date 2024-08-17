@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bvf1ldvu22o15" path="res://resources/sprites/placeholders/ballon.png" id="2_g4vou"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tw6dm"]
+size = Vector2(10, 10)
 
 [node name="BalloonCollision" type="CharacterBody2D" groups=["balloon"]]
 script = ExtResource("1_vthij")
