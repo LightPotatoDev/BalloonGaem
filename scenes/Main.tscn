@@ -25,4 +25,4 @@ layer_0/tile_data = PackedInt32Array(196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 3
 [node name="Objects" type="TileMap" parent="GameManager"]
 tile_set = ExtResource("3_ln3ib")
 format = 2
-layer_0/tile_data = PackedInt32Array(196614, 0, 65536, 131084, 0, 131072)
+layer_0/tile_data = PackedInt32Array(196614, 0, 65536, 131084, 0, 131072, 524301, 0, 196608, 524304, 0, 262144)

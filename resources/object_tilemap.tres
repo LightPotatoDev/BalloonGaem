@@ -1,11 +1,16 @@
-[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://bknitdukt8bmp"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://bknitdukt8bmp"]
 
 [ext_resource type="PackedScene" uid="uid://dxm2n4pn5r4ql" path="res://scenes/objects/AirTankRight.tscn" id="1_1wkf2"]
 [ext_resource type="PackedScene" uid="uid://c6e4lssvwwqxn" path="res://scenes/objects/AirTankDown.tscn" id="2_a806t"]
+[ext_resource type="PackedScene" uid="uid://bt2dnq5vufmni" path="res://scenes/objects/YesTile.tscn" id="3_sam1b"]
+[ext_resource type="PackedScene" uid="uid://bjkfrpn8ml400" path="res://scenes/objects/NoTile.tscn" id="4_fkhq1"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_gu0h5"]
+resource_name = "gimmicks"
 scenes/1/scene = ExtResource("1_1wkf2")
 scenes/2/scene = ExtResource("2_a806t")
+scenes/3/scene = ExtResource("3_sam1b")
+scenes/4/scene = ExtResource("4_fkhq1")
 
 [resource]
 tile_size = Vector2i(32, 32)
