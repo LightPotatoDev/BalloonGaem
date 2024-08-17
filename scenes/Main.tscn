@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://2lxmwbgsphcx"]
 
-[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/PlayerBalloon.tscn" id="1_i0xqu"]
+[ext_resource type="PackedScene" uid="uid://6js8brrwjbmt" path="res://scenes/objects/Balloon.tscn" id="1_i0xqu"]
 [ext_resource type="TileSet" uid="uid://cau1xylhqfcta" path="res://resources/terrain_tiles.tres" id="2_we40a"]
 
 [node name="Main" type="Node2D"]
@@ -9,8 +9,12 @@
 
 [node name="PlayerBalloon" parent="GameManager" instance=ExtResource("1_i0xqu")]
 position = Vector2(144, 144)
+is_player = true
+
+[node name="PlayerBalloon2" parent="GameManager" instance=ExtResource("1_i0xqu")]
+position = Vector2(176, 176)
 
 [node name="Terrain" type="TileMap" parent="GameManager" groups=["wall"]]
 tile_set = ExtResource("2_we40a")
 format = 2
-layer_0/tile_data = PackedInt32Array(196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0)
+layer_0/tile_data = PackedInt32Array(196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 393222, 0, 0)
